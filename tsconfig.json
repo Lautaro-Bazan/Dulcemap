@@ -3,15 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "app/(teoria)/index.jsx", "app/(home)/_layout.jsx", "app/(tabs)/_layout.jsx", "app/(home)/prueba.jsx", "app/(tabs)/hola.jsx", "app/(tabs)/index.jsx", "components/common/CartWidget.jsx", "components/common/CartWidget.jsx"]
 }
