@@ -1,25 +1,40 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { CartContext } from "../context/CartContext";
 
-export function Counter({ cantidad, setCantidad }) {
+export function Counter({ cantidad, setCantidad, item }) {
+  const { addToCart } = useContext(CartContext);
   // Asegúrate de usar las props correctamente
   const sumar = () => {
-    setCantidad(cantidad + 1);
+    if (cantidad < item.stock) {
+      setCantidad(cantidad + 1);
+    }
   };
-
   const restar = () => {
-    if (cantidad > 0) {
+    if (cantidad > 1) {
       setCantidad(cantidad - 1);
     }
   };
+  const onAdd = () => {
+    let objetoParaElCarrito = { ...item, quantity: cantidad };
+
+    addToCart(objetoParaElCarrito);
+  };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={restar}>
-        <Text style={styles.buttonText}>-</Text>
-      </TouchableOpacity>
-      <Text style={styles.counter}>{cantidad}</Text>
-      <TouchableOpacity style={styles.button} onPress={sumar}>
-        <Text style={styles.buttonText}>+</Text>
+    <View>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPress={restar}>
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+        <Text style={styles.counter}>{cantidad}</Text>
+        <TouchableOpacity style={styles.button} onPress={sumar}>
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity onPress={onAdd}>
+        <Text>Agregar al carrito</Text>
       </TouchableOpacity>
     </View>
   );

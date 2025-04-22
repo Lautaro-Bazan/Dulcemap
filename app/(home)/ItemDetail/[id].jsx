@@ -38,7 +38,7 @@ export default function id() {
       </View>
       <View style={styles.seccionPago}>
         {/* Pasa la cantidad y setCantidad al componente Counter */}
-        <Counter cantidad={cantidad} setCantidad={setCantidad} />
+        <Counter cantidad={cantidad} setCantidad={setCantidad} item={item} />
         <Text style={styles.total}>${totalAPagar}</Text>
       </View>
     </View>
