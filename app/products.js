@@ -8,6 +8,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "chocoleza",
+    discount: false,
   },
   {
     id: "2",
@@ -18,6 +19,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "tradicional",
+    discount: true,
   },
   {
     id: "3",
@@ -28,6 +30,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "chocoleza",
+    discount: false,
   },
   {
     id: "4",
@@ -38,6 +41,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "la quinta",
+    discount: true,
   },
   {
     id: "5",
@@ -48,6 +52,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "tradicional",
+    discount: false,
   },
   {
     id: "6",
@@ -58,6 +63,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "chocoleza",
+    discount: false,
   },
   {
     id: "7",
@@ -68,6 +74,7 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "chocoleza",
+    discount: false,
   },
   {
     id: "8",
@@ -78,5 +85,19 @@ export let products = [
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "chocoleza",
+    discount: false,
   },
+  {
+    id: "9",
+    title: "Alfajor 8",
+    price: 900,
+    description: "alfajor muy rico",
+    imageUrl:
+      "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
+    stock: 6,
+    carpa: "chocoleza",
+    discount: true,
+  },
+  
+  
 ];

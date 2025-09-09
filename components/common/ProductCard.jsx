@@ -2,7 +2,7 @@ import { Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
 export function ProductCard(props) {
-  const { image, title, price, description, id, style } = props;
+  const { image, title, price, description, id, style,  } = props;
   const router = useRouter();
   return (
     <TouchableOpacity

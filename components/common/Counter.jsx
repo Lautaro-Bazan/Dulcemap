@@ -25,15 +25,17 @@ export function Counter({ cantidad, setCantidad, item }) {
     <View>
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={restar}>
-          <Text style={styles.buttonText}>-</Text>
+          <Text style={styles.textButton}>-</Text>
         </TouchableOpacity>
+
         <Text style={styles.counter}>{cantidad}</Text>
+
         <TouchableOpacity style={styles.button} onPress={sumar}>
-          <Text style={styles.buttonText}>+</Text>
+          <Text style={styles.textButton}>+</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={onAdd}>
+      <TouchableOpacity onPress={onAdd} style={styles.addButton}>
         <Text>Agregar al carrito</Text>
       </TouchableOpacity>
     </View>
@@ -41,6 +43,7 @@ export function Counter({ cantidad, setCantidad, item }) {
 }
 const styles = StyleSheet.create({
   container: {
+    
     flexDirection: "row",
     justifyContent: "center", // Centra el diseño horizontalmente
     alignItems: "center", // Asegura que los elementos estén alineados
@@ -54,22 +57,33 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     borderRadius: 25, // Botones circulares
     justifyContent: "center", // Centra el contenido dentro del botón
     alignItems: "center",
     marginHorizontal: 10, // Espacio entre botones y contador
   },
-  buttonText: {
+  textButton: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#000", // Texto negro
   },
   counter: {
-    fontSize: 32,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#333",
     marginHorizontal: 20, // Espacio entre los botones y el número
   },
+  addButton: {
+  width: "185%",              // ocupa todo el ancho disponible
+  justifyContent: "center",   // centra verticalmente el contenido
+  alignItems: "center",       // centra horizontalmente el contenido
+  paddingVertical: 12,        // altura interna (puedes ajustar)
+  marginVertical: 8,
+  borderWidth: 1,             // grosor del borde
+  borderColor: "black",       // color del borde
+  borderRadius: 10,           // redondeado de esquinas
+  
+},
 });

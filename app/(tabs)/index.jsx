@@ -41,7 +41,7 @@ export default function Index() {
             source={{
               uri: "https://res.cloudinary.com/djigsqrrh/image/upload/v1743529317/d695017f12ee493fed2f14f163f658d9RV4fYsF8O3mT06sR-4_euvflu.jpg",
             }}
-            style={{ width: 40, height: 40 }}
+            style={styles.img}
           />
           <CartWidget />
         </View>
@@ -111,6 +111,12 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   productCard: {
-    marginHorizontal: 5, // Espaciado entre productos del scroll horizontal
+    marginHorizontal: 5, 
+  },
+  img: {
+    width: 40,
+    height: 40,  
+    marginLeft: 15,
+    marginTop: 10
   },
 });

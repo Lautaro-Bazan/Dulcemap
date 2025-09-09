@@ -30,15 +30,16 @@ export default function id() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <Image style={styles.imageProduct} source={{ uri: item.imageUrl }} />
+      
       <View style={styles.info}>
+        <Image style={styles.imageProduct} source={{ uri: item.imageUrl }} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.price}>${item.price}</Text>
         <Text style={styles.description}>{item.description}</Text>
       </View>
       <View style={styles.seccionPago}>
         {/* Pasa la cantidad y setCantidad al componente Counter */}
-        <Counter cantidad={cantidad} setCantidad={setCantidad} item={item} />
+        <Counter cantidad={cantidad} setCantidad={setCantidad} item={item} style={styles.counter} />
         <Text style={styles.total}>${totalAPagar}</Text>
       </View>
     </View>
@@ -49,6 +50,7 @@ export default function id() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-between",
     backgroundColor: "#fff",
   },
   card: {
@@ -87,6 +89,10 @@ const styles = StyleSheet.create({
     color: "#555",
   },
   seccionPago: {
-    flexDirection: "row",
+  flexDirection: "row",
+  justifyContent: "space-around",
   },
+  total: {
+    fontSize: 24,
+  }
 });
