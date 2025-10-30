@@ -1,28 +1,29 @@
 import { useContext } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { CartContext } from "../context/CartContext";
 
 export function Counter({ cantidad, setCantidad, item }) {
   const { addToCart } = useContext(CartContext);
-  // Asegúrate de usar las props correctamente
+
   const sumar = () => {
     if (cantidad < item.stock) {
       setCantidad(cantidad + 1);
     }
   };
+
   const restar = () => {
     if (cantidad > 1) {
       setCantidad(cantidad - 1);
     }
   };
-  const onAdd = () => {
-    let objetoParaElCarrito = { ...item, quantity: cantidad };
 
+  const onAdd = () => {
+    const objetoParaElCarrito = { ...item, quantity: cantidad };
     addToCart(objetoParaElCarrito);
   };
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={restar}>
           <Text style={styles.textButton}>-</Text>
@@ -36,54 +37,69 @@ export function Counter({ cantidad, setCantidad, item }) {
       </View>
 
       <TouchableOpacity onPress={onAdd} style={styles.addButton}>
-        <Text>Agregar al carrito</Text>
+        <Text style={styles.addButtonText}>Agregar al carrito</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
+  wrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
-    
     flexDirection: "row",
-    justifyContent: "center", // Centra el diseño horizontalmente
-    alignItems: "center", // Asegura que los elementos estén alineados
-    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 50,
     backgroundColor: "#fff",
-    borderWidth: 1, // Borde fino
-    borderColor: "#ccc", // Color gris claro para el borde
-    borderRadius: 40, // Bordes redondeados
-    padding: 5, // Espaciado interno del borde
-    backgroundColor: "#fff", // Fondo blanco detrás del contador
-    alignSelf: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    elevation: 1,
   },
   button: {
-    width: 30,
-    height: 30,
-    borderRadius: 25, // Botones circulares
-    justifyContent: "center", // Centra el contenido dentro del botón
+    width: 35,
+    height: 35,
+    borderRadius: 25,
+    justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 10, // Espacio entre botones y contador
   },
   textButton: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#000", // Texto negro
   },
   counter: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-    marginHorizontal: 20, // Espacio entre los botones y el número
+    fontWeight: "600",
+    color: "#222",
+    marginHorizontal: 20,
+    minWidth: 25,
+    textAlign: "center",
   },
   addButton: {
-  width: "185%",              // ocupa todo el ancho disponible
-  justifyContent: "center",   // centra verticalmente el contenido
-  alignItems: "center",       // centra horizontalmente el contenido
-  paddingVertical: 12,        // altura interna (puedes ajustar)
-  marginVertical: 8,
-  borderWidth: 1,             // grosor del borde
-  borderColor: "black",       // color del borde
-  borderRadius: 10,           // redondeado de esquinas
-  
-},
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 12,
+    marginTop: 10,
+    backgroundColor: "#9460b9ff",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });

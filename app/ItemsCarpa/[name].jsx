@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { products } from "../../products";
-import { ProductCard } from "../../../components/common/ProductCard";
+import { products } from "../../constants/products";
+import { ProductCard } from "../../components/common/ProductCard";
 
 export default function name() {
   const { name } = useLocalSearchParams(); // Obtiene el nombre dinámico de la carpa

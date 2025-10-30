@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { products } from "../products";
+import { products } from "../../constants/products";
 
 import { CartWidget } from "../../components/common/CartWidget";
 

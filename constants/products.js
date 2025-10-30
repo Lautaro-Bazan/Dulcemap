@@ -1,9 +1,9 @@
 export let products = [
   {
     id: "1",
-    title: "Alfajor 1",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Chocolita",
+    price: 950,
+    description: "Alfajor relleno de dulce de leche y baño de chocolate.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -12,9 +12,9 @@ export let products = [
   },
   {
     id: "2",
-    title: "Alfajor 2",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Tradicionalita",
+    price: 880,
+    description: "Alfajor clásico con dulce de leche natural y azúcar impalpable.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -23,9 +23,9 @@ export let products = [
   },
   {
     id: "3",
-    title: "Alfajor 3",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Nuezita",
+    price: 980,
+    description: "Alfajor con nueces molidas y cobertura de chocolate blanco.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -34,9 +34,9 @@ export let products = [
   },
   {
     id: "4",
-    title: "Alfajor 4",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Quintita",
+    price: 1050,
+    description: "Relleno doble con dulce de leche y mousse de chocolate.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -45,9 +45,9 @@ export let products = [
   },
   {
     id: "5",
-    title: "alfajor 5",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Mielita",
+    price: 870,
+    description: "Alfajor con harina integral y dulce natural de miel.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -56,9 +56,9 @@ export let products = [
   },
   {
     id: "6",
-    title: "Alfajor 6",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Cacaolita",
+    price: 990,
+    description: "Masa de cacao con relleno intenso y cobertura amarga.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -67,9 +67,9 @@ export let products = [
   },
   {
     id: "7",
-    title: "Alfajor 7",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Avellanita",
+    price: 1100,
+    description: "Relleno de crema de avellanas y baño de chocolate con leche.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -78,9 +78,9 @@ export let products = [
   },
   {
     id: "8",
-    title: "Alfajor 8",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Veguita",
+    price: 920,
+    description: "Alfajor vegano de algarroba con dulce de batata.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
@@ -89,15 +89,13 @@ export let products = [
   },
   {
     id: "9",
-    title: "Alfajor 8",
-    price: 900,
-    description: "alfajor muy rico",
+    title: "Festita",
+    price: 990,
+    description: "Relleno tricolor: dulce de leche, frambuesa y chocolate blanco.",
     imageUrl:
       "https://res.cloudinary.com/djigsqrrh/image/upload/v1743656137/dos-alfajor-chocolate-negro-aislado-sobre-fondo-blanco_519721-1572_kmudx5.jpg",
     stock: 6,
     carpa: "chocoleza",
     discount: true,
   },
-  
-  
 ];
