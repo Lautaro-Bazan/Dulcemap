@@ -10,27 +10,27 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons"; // Importamos los iconos
+import { Feather } from "@expo/vector-icons"; // Para el icono del ojo
 
-// Asegúrate de que esta IP es la de tu backend
-const API_URL = "http://192.168.0.139:3001";
+// ⚠️ ¡IMPORTANTE! Revisa que esta sea tu IP y puerto correctos
+const API_URL = "http://192.168.7.93:3001";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // Estado para el "ojito"
-  const [isLoading, setIsLoading] = useState(false); // Estado para el spinner
   const router = useRouter();
 
   const handleLogin = async () => {
+    // Validación simple
     if (!username || !password) {
-      Alert.alert("Campos vacíos", "Por favor, ingresa tu usuario y contraseña.");
+      Alert.alert("Error", "Por favor, ingresa usuario y contraseña.");
       return;
     }
-    setIsLoading(true);
 
     try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
@@ -44,19 +44,30 @@ export default function LoginScreen() {
       const data = await response.json();
 
       if (response.ok) {
-        if (data.role === "admin") {
+        // ¡Login exitoso!
+        // Verificamos el rol que nos mandó el backend
+        if (data.role === "superadmin") {
+          // Redirigir al admin a su pantalla
           router.replace("/admin");
+        } else if (data.role === "carpa_admin") {
+          // --- ¡ESTE ES EL CAMBIO! ---
+          // Redirigir al admin de carpa a la NUEVA ruta de pestañas
+          // Lo enviamos a 'pedidos' que es la primera pestaña del grupo (carpa)
+          router.replace({
+            pathname: "/(carpa)/pedidos", // Nueva ruta
+            params: { carpa: data.carpa }, // Le pasamos el nombre de la carpa
+          });
         } else {
+          // Redirigir al usuario normal a las tabs
           router.replace("/(tabs)");
         }
       } else {
+        // Error de login
         Alert.alert("Error", data.message || "Credenciales incorrectas");
       }
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "No se pudo conectar al servidor");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -64,119 +75,121 @@ export default function LoginScreen() {
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.content}
+        style={styles.container}
       >
-        {/* Logo Placeholder */}
-        <Image
-          // Reemplaza esta URL por la de tu logo
-          source={{ uri: "https://res.cloudinary.com/djigsqrrh/image/upload/v1743529317/d695017f12ee493fed2f14f163f658d9RV4fYsF8O3mT06sR-4_euvflu.jpg" }}
-          style={styles.logo}
-        />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.content}>
+            {/* Logo Circular */}
+            <View style={styles.logoContainer}>
+              <Image
+                source={{
+                  uri: "https://placehold.co/150x150/9460b9/FFF?text=Logo",
+                }}
+                style={styles.logo}
+              />
+            </View>
 
-        <Text style={styles.title}>Iniciar Sesión</Text>
-        <Text style={styles.subtitle}>Bienvenido de nuevo</Text>
+            <Text style={styles.title}>Bienvenido</Text>
+            <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
 
-        {/* Input de Usuario */}
-        <View style={styles.inputContainer}>
-          <Feather name="user" size={20} color="#666" style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre de usuario"
-            placeholderTextColor="#888"
-            value={username}
-            onChangeText={setUsername}
-            autoCapitalize="none"
-          />
-        </View>
+            {/* Input de Usuario */}
+            <View style={styles.inputContainer}>
+              <Feather name="user" size={20} color="#888" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Usuario"
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize="none"
+                placeholderTextColor="#888"
+              />
+            </View>
 
-        {/* Input de Contraseña */}
-        <View style={styles.inputContainer}>
-          <Feather name="lock" size={20} color="#666" style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            placeholderTextColor="#888"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!showPassword} // Controlado por el estado
-          />
-          {/* Botón de "ojito" */}
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.eyeIcon}
-          >
-            <Feather
-              name={showPassword ? "eye" : "eye-off"}
-              size={20}
-              color="#666"
-            />
-          </TouchableOpacity>
-        </View>
+            {/* Input de Contraseña */}
+            <View style={styles.inputContainer}>
+              <Feather name="lock" size={20} color="#888" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Contraseña"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword} // Controlado por el estado
+                placeholderTextColor="#888"
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.eyeIcon}
+              >
+                <Feather
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={20}
+                  color="#888"
+                />
+              </TouchableOpacity>
+            </View>
 
-        {/* Botón de Login */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleLogin}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>Entrar</Text>
-          )}
-        </TouchableOpacity>
+            {/* Botón de Login */}
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Entrar</Text>
+            </TouchableOpacity>
 
-        {/* Botón de Registrarse */}
-        <TouchableOpacity
-          style={styles.registerButton}
-          onPress={() => router.push("/register")}
-        >
-          <Text style={styles.registerButtonText}>
-            ¿No tienes cuenta? <Text style={styles.registerLink}>Regístrate</Text>
-          </Text>
-        </TouchableOpacity>
+            {/* Botón de Registrarse */}
+            <View style={styles.registerContainer}>
+              <Text style={styles.registerText}>¿No tienes una cuenta? </Text>
+              <TouchableOpacity onPress={() => router.push("/register")}>
+                <Text style={styles.registerLink}>Regístrate</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
+// --- Estilos ---
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f4f4f8", // Un fondo gris claro
   },
   content: {
     flex: 1,
     justifyContent: "center",
-    padding: 24,
+    paddingHorizontal: 30,
+  },
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 30,
   },
   logo: {
-    width: 120,
-    height: 120,
-     // Circular
-    alignSelf: "center",
-    marginBottom: 30,
-    backgroundColor: '#f0f0f0'
+    width: 130,
+    height: 130,
+    borderRadius: 65, // Circular
+    borderWidth: 3,
+    borderColor: "#fff",
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "bold",
     color: "#333",
     textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    color: "#666",
+    color: "#777",
     textAlign: "center",
     marginBottom: 40,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F7F7F7",
-    borderRadius: 10,
+    backgroundColor: "#fff",
+    borderRadius: 12,
     marginBottom: 15,
     paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
   inputIcon: {
     marginRight: 10,
@@ -191,9 +204,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   button: {
-    backgroundColor: "#9460b9ff",
-    padding: 15,
-    borderRadius: 10,
+    backgroundColor: "#9460b9ff", // Color principal
+    padding: 18,
+    borderRadius: 12,
     alignItems: "center",
     marginTop: 20,
     shadowColor: "#9460b9ff",
@@ -207,15 +220,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  registerButton: {
-    marginTop: 30,
+  registerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
+    marginTop: 30,
   },
-  registerButtonText: {
+  registerText: {
     fontSize: 15,
-    color: "#666",
+    color: "#777",
   },
   registerLink: {
+    fontSize: 15,
     color: "#9460b9ff",
     fontWeight: "bold",
   },

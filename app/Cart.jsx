@@ -5,44 +5,50 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  StyleSheet,
+  StyleSheet, // Asumo que los estilos están definidos abajo
   Modal,
 } from "react-native";
 import { CartContext } from "../components/context/CartContext";
+
+// --- ¡NUEVO! Definimos la URL de tu API (DEBE SER LA MISMA QUE EN TU HOME) ---
+const API_URL = "http://192.168.7.93:3001"; // <-- CORREGIDO (¡Verifica esta IP!)
 
 export default function Cart() {
   const { cart, removeCart, removeById, getTotalAmount } =
     useContext(CartContext);
 
   const [showModal, setShowModal] = useState(false);
-  const [pickupCode, setPickupCode] = useState(null); // Código de retiro
+  const [pickupCode, setPickupCode] = useState(null);
 
   const total = getTotalAmount();
 
-  // 🟢 MODIFICADO: se agregó el envío de la orden al backend
   const handleCheckout = async () => {
-    // Genera un código aleatorio de 6 dígitos
     const code = Math.floor(100000 + Math.random() * 900000);
     setPickupCode(code);
 
     try {
-      // 👉 Enviar la orden al backend
-      const response = await fetch("http://192.168.7.129:3000/api/orders", {
+      // 1. Usar la constante API_URL
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          cart,       // productos del carrito
-          total,      // total del pedido
-          pickupCode: code, // código generado
+          // 2. CORREGIDO: El backend espera 'items', no 'cart'
+          items: cart,   
+          total: total,
+          // 3. El backend (orders.routes.js) genera su propio código, 
+          //    así que no necesitamos enviarlo.
+          // pickupCode: code, 
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log("✅ Orden guardada:", data.order);
+        console.log("✅ Orden guardada:", data);
+        // 4. Usar el código de retiro que SÍ nos devuelve el backend
+        setPickupCode(data.pickupCode); 
       } else {
-        console.error("❌ Error al guardar orden:", data.error);
+        console.error("❌ Error al guardar orden:", data.message);
       }
     } catch (error) {
       console.error("⚠️ Error de conexión con el servidor:", error);
@@ -57,38 +63,38 @@ export default function Cart() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>🛒 Tu Carrito</Text>
+      {/* ... (Tu JSX de la lista de productos) ... */}
 
       {cart.length === 0 ? (
-        <Text style={styles.emptyText}>Tu carrito está vacío</Text>
-      ) : (
-        cart.map((product) => (
-          <View key={product.id} style={styles.card}>
-            <Image
-              source={{ uri: product.imageUrl }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-            <View style={styles.info}>
-              <Text style={styles.name}>{product.title}</Text>
-              <Text style={styles.price}>${product.price}</Text>
-              <Text style={styles.quantity}>Cantidad: {product.quantity}</Text>
+         <Text style={styles.emptyText}>Tu carrito está vacío</Text>
+       ) : (
+         cart.map((product) => (
+           <View key={product.id} style={styles.card}>
+             <Image
+               source={{ uri: product.imageUrl }}
+               style={styles.image}
+               resizeMode="cover"
+             />
+             <View style={styles.info}>
+               <Text style={styles.name}>{product.title}</Text>
+               <Text style={styles.price}>${product.price}</Text>
+               <Text style={styles.quantity}>Cantidad: {product.quantity}</Text>
 
-              <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() => removeById(product.id)}
-              >
-                <Text style={styles.deleteText}>Eliminar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ))
-      )}
+               <TouchableOpacity
+                 style={styles.deleteButton}
+                 onPress={() => removeById(product.id)}
+               >
+                 <Text style={styles.deleteText}>Eliminar</Text>
+               </TouchableOpacity>
+             </View>
+           </View>
+         ))
+       )}
 
       {cart.length > 0 && (
         <View style={styles.footer}>
           <Text style={styles.total}>Total: ${total}</Text>
-
+          
           <TouchableOpacity style={styles.clearButton} onPress={removeCart}>
             <Text style={styles.clearText}>Vaciar carrito</Text>
           </TouchableOpacity>
@@ -102,36 +108,35 @@ export default function Cart() {
         </View>
       )}
 
-      {/* 🌟 Modal de confirmación */}
-      <Modal transparent visible={showModal} animationType="fade">
-        <View style={styles.overlay}>
-          <View style={styles.modal}>
-            <Text style={styles.modalTitle}>¡Compra finalizada!</Text>
-            <Text style={styles.modalText}>
-              Gracias por tu compra 🛍️{"\n"}
-              {pickupCode && (
-                <>
-                  Tu código de retiro es:{" "}
-                  <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-                    {pickupCode}
-                  </Text>
-                </>
-              )}
-            </Text>
+      {/* ... (Tu JSX del Modal) ... */}
+       <Modal transparent visible={showModal} animationType="fade">
+         <View style={styles.overlay}>
+           <View style={styles.modal}>
+             <Text style={styles.modalTitle}>¡Compra finalizada!</Text>
+             <Text style={styles.modalText}>
+               Gracias por tu compra 🛍️{"\n"}
+               {pickupCode && (
+                 <>
+                   Tu código de retiro es:{" "}
+                   <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                     {pickupCode}
+                   </Text>
+                 </>
+               )}
+             </Text>
 
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => setShowModal(false)}
-            >
-              <Text style={styles.modalButtonText}>Aceptar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+             <TouchableOpacity
+               style={styles.modalButton}
+               onPress={() => setShowModal(false)}
+             >
+               <Text style={styles.modalButtonText}>Aceptar</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

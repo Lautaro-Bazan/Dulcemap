@@ -1,4 +1,7 @@
 import { Stack } from "expo-router";
+// ⚠️ ¡IMPORTANTE! Asegúrate de que esta importación sea correcta
+// Si tu CartContext exporta con 'export const', usa llaves { }
+// Si exporta con 'export default', no uses llaves
 import { CartContextProvider } from "../components/context/CartContext";
 
 export default function RootLayout() {
@@ -8,9 +11,14 @@ export default function RootLayout() {
         
         {/* RUTAS PRINCIPALES */}
         <Stack.Screen name="index" />                   {/* app/index.jsx (Login) */}
-        <Stack.Screen name="register" />                {/* ¡NUEVA! app/register.jsx (Registro) */}
+        <Stack.Screen name="register" />                {/* app/register.jsx (Registro) */}
         <Stack.Screen name="(tabs)" />                  {/* app/(tabs)/ (Tu app principal) */}
         
+        {/* --- ¡ESTE ES EL CAMBIO! --- */}
+        {/* Esta línea reemplaza a 'carpa-dashboard' */}
+        {/* Apunta a la carpeta app/(carpa) que tiene su propio layout de pestañas */}
+        <Stack.Screen name="(carpa)" />                 
+
         {/* PANTALLAS DEL STACK */}
         <Stack.Screen name="Cart" />                    {/* app/Cart.jsx */}
         <Stack.Screen name="ItemDetail/[id]" />         {/* app/ItemDetail/[id].jsx */}
@@ -32,3 +40,4 @@ export default function RootLayout() {
     </CartContextProvider>
   );
 }
+
